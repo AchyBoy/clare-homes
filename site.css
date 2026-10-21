@@ -291,3 +291,4 @@ footer .lic{margin-top:14px;font-size:.84rem}
   .logo-draw path,.logo-draw circle{stroke-dashoffset:0!important}
 }
 .page-hero::after{background:linear-gradient(180deg,rgba(11,22,38,.6),rgba(11,22,38,.72) 40%,rgba(11,22,38,.95))}
+.hero .kicker{color:var(--gold-2);text-shadow:0 1px 10px rgba(0,0,0,.9),0 0 2px rgba(0,0,0,.8)}
