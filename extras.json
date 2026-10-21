@@ -1,0 +1,222 @@
+{
+ "extras": {
+  "isaac": {
+   "id": "isaac",
+   "alt": "Isaac Scott, co founder of Clare Homes",
+   "w": 640,
+   "h": 896,
+   "W": 1463,
+   "H": 2048,
+   "src": "meet-the-builders_01"
+  },
+  "kendall": {
+   "id": "kendall",
+   "alt": "Kendall Gilmore, co founder of Clare Homes",
+   "w": 640,
+   "h": 896,
+   "W": 1463,
+   "H": 2048,
+   "src": "meet-the-builders_02"
+  },
+  "duo": {
+   "id": "duo",
+   "alt": "Isaac Scott and Kendall Gilmore at a framed jobsite",
+   "w": 640,
+   "h": 457,
+   "W": 1600,
+   "H": 1143,
+   "src": "home_07"
+  },
+  "award": {
+   "id": "award",
+   "alt": "Isaac and Kendall at the 2025 EEBA High Performance Home Builder Summit, Excellence in Resiliency Award",
+   "w": 640,
+   "h": 738,
+   "W": 1080,
+   "H": 1246,
+   "src": "home_03"
+  },
+  "cert": {
+   "id": "cert",
+   "alt": "Certificate: Isaac Scott completed the FORTIFIED Wise Professional Hurricane Exam, November 26, 2023",
+   "w": 640,
+   "h": 494,
+   "W": 1100,
+   "H": 849,
+   "src": "home_02"
+  },
+  "pod1": {
+   "id": "pod1",
+   "alt": "Structure Talk podcast cover, Building Fortified Homes with Isaac Scott",
+   "w": 640,
+   "h": 640,
+   "W": 640,
+   "H": 640,
+   "src": "home_04"
+  },
+  "pod2": {
+   "id": "pod2",
+   "alt": "Real Talk with Jim Keaty, episode 18, Clare Homes",
+   "w": 640,
+   "h": 640,
+   "W": 640,
+   "H": 640,
+   "src": "home_05"
+  },
+  "pod3": {
+   "id": "pod3",
+   "alt": "Better Homes, Better Future podcast cover",
+   "w": 640,
+   "h": 640,
+   "W": 640,
+   "H": 640,
+   "src": "home_06"
+  },
+  "ibhs1": {
+   "id": "ibhs1",
+   "alt": "Test equipment inside the IBHS Research Center",
+   "w": 640,
+   "h": 877,
+   "W": 1121,
+   "H": 1536,
+   "src": "residential-projects_01"
+  },
+  "ibhs2": {
+   "id": "ibhs2",
+   "alt": "Standing inside the IBHS Research Center wind test chamber",
+   "w": 640,
+   "h": 877,
+   "W": 1494,
+   "H": 2048,
+   "src": "residential-projects_02"
+  },
+  "carencro1": {
+   "id": "carencro1",
+   "alt": "Carencro custom build with a metal roof under construction",
+   "w": 640,
+   "h": 877,
+   "W": 1121,
+   "H": 1536,
+   "src": "residential-projects_03"
+  },
+  "carencro2": {
+   "id": "carencro2",
+   "alt": "Carencro custom build wrapped in green sheathing",
+   "w": 640,
+   "h": 877,
+   "W": 1494,
+   "H": 2048,
+   "src": "residential-projects_04"
+  },
+  "parade": {
+   "id": "parade",
+   "alt": "303 Decatur Lane with Parade of Homes signs out front",
+   "w": 640,
+   "h": 877,
+   "W": 1494,
+   "H": 2048,
+   "src": "residential-projects_05"
+  },
+  "parade2": {
+   "id": "parade2",
+   "alt": "Isaac and Kendall in the kitchen at 303 Decatur Lane",
+   "w": 640,
+   "h": 877,
+   "W": 1494,
+   "H": 2048,
+   "src": "residential-projects_06"
+  },
+  "ground": {
+   "id": "ground",
+   "alt": "Framing on the FORTIFIED Gold, ENERGY STAR custom build",
+   "w": 640,
+   "h": 853,
+   "W": 1536,
+   "H": 2048,
+   "src": "residential-projects_08"
+  },
+  "buildshow": {
+   "id": "buildshow",
+   "alt": "The Build Show filming inside 303 Decatur Lane",
+   "w": 640,
+   "h": 853,
+   "W": 1536,
+   "H": 2048,
+   "src": "residential-projects_09"
+  },
+  "hers45": {
+   "id": "hers45",
+   "alt": "HERS rating certificate for 303 Decatur Lane: HERS index 45, annual savings $943",
+   "w": 640,
+   "h": 489,
+   "W": 1058,
+   "H": 809,
+   "src": "residential-projects_zero-energy-ready-home_04"
+  },
+  "hers19": {
+   "id": "hers19",
+   "alt": "HERS rating certificate for the Hightower project: HERS index 19",
+   "w": 640,
+   "h": 495,
+   "W": 1600,
+   "H": 1237,
+   "src": "residential-projects_adu-projects_26"
+  },
+  "hers54": {
+   "id": "hers54",
+   "alt": "HERS rating certificate: HERS index 54",
+   "w": 640,
+   "h": 495,
+   "W": 1600,
+   "H": 1237,
+   "src": "residential-projects_custom-builds_22"
+  },
+  "fortcert": {
+   "id": "fortcert",
+   "alt": "FORTIFIED Roof designation certificate",
+   "w": 640,
+   "h": 517,
+   "W": 1600,
+   "H": 1294,
+   "src": "residential-projects_custom-builds_23"
+  }
+ },
+ "logos": {
+  "airplus": {
+   "w": 360,
+   "h": 360
+  },
+  "zerh": {
+   "w": 360,
+   "h": 449
+  },
+  "fortified": {
+   "w": 360,
+   "h": 360
+  },
+  "energystar": {
+   "w": 360,
+   "h": 360
+  },
+  "ahba": {
+   "w": 360,
+   "h": 180
+  },
+  "lsu": {
+   "w": 360,
+   "h": 271
+  },
+  "eeba": {
+   "w": 360,
+   "h": 94
+  },
+  "lhba": {
+   "w": 360,
+   "h": 270
+  },
+  "gold": {
+   "w": 360,
+   "h": 171
+  }
+ }
+}
