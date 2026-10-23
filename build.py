@@ -323,6 +323,8 @@ def page_fortified():
 
 {storm_section('h2', full=True)}
 
+{open('parts/fortified-compare.frag').read()}
+
 <section aria-labelledby="certH"><div class="wrap split">
   <div class="rv"><span class="kicker">Trained and certified</span><h2 id="certH">We are certified FORTIFIED Professional Contractors</h2>
   <p class="lead">Isaac Scott completed the FORTIFIED Wise Professional Hurricane Exam on November 26, 2023.</p>
