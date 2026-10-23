@@ -65,6 +65,7 @@
 .hs.up circle.ring{fill:#f2cd6b;stroke:#9a7414}
 .hs.sel circle.ring{fill:var(--navy)}
 .hs.sel text{fill:#fff}
+.hs.broke circle.ring{fill:#c0392b;stroke:#7a1f16}.hs.broke text{fill:#fff}.hs.broke .pulse{stroke:#c0392b;animation:fcp 1.6s ease-out infinite}
 .hs .pulse{fill:none;stroke:var(--gold);stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:center}
 .hs.up .pulse{animation:fcp 2.4s ease-out infinite}
 @keyframes fcp{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(2.2)}}
@@ -239,7 +240,7 @@
     hot.appendChild(g); p.g=g;
   });
   function pick(i){sel=i;paint();}
-  function clearDamage(){ document.querySelectorAll('#fcSvg .fail, #fcSvg .strain, #fcSvg .chunk, #fcSvg .roofoff').forEach(function(n){n.classList.remove('fail','strain','chunk','roofoff')}); svg.classList.remove('roofgone','done'); res.classList.remove('show'); }
+  function clearDamage(){ document.querySelectorAll('#fcSvg .fail, #fcSvg .strain, #fcSvg .chunk, #fcSvg .roofoff').forEach(function(n){n.classList.remove('fail','strain','chunk','roofoff')}); svg.classList.remove('roofgone','done'); res.classList.remove('show'); P.forEach(function(p){p.g.classList.remove('broke')}); }
   function setLevel(l){level=l;clearDamage();paint();}
   function paint(){
     ['lvl0','lvl1','lvl2','lvl3'].forEach(function(c){svg.classList.remove(c)}); svg.classList.add('lvl'+level);
@@ -300,7 +301,7 @@
     },2600);
     setTimeout(function(){
       svg.classList.remove('storming','st1','st2','st3','st4'); stage.classList.remove('sky','st1','st2','st3','st4','shake');
-      svg.classList.add('done');
+      svg.classList.add('done'); failed.forEach(function(p){ p.g.classList.add('broke') });
       storming=false; run.disabled=false; run.lastChild.textContent='Run it again';
     },power===4&&level===0?7200:5600);
   });
