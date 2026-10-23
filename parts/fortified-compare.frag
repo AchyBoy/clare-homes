@@ -285,14 +285,14 @@
       if(!failed.length){
         res.innerHTML=head+'everything held.'+(level===3&&power===4?' The roof stayed tied down to the foundation.':'');
       } else {
-        var fix=Math.min.apply(null,failed.map(function(p){return p.lv}));
+        var fix=Math.max.apply(null,failed.map(function(p){return p.lv}));
         var said=failed.map(function(p){ if(level===0&&p.k==='path') return 'the whole roof tore off'; if(p.k==='nails') return 'a section of roof deck tore away'; return SAY[p.k]; });
         var ORDER=['path','nails','gable','windows','garage','porch','shingles','deck','edge','vents'];
         failed.sort(function(a,b){return ORDER.indexOf(a.k)-ORDER.indexOf(b.k)});
         said=failed.map(function(p){ if(level===0&&p.k==='path') return 'the whole roof tore off'; if(p.k==='nails') return 'a section of roof deck tore away'; return SAY[p.k]; });
         if(level===0&&power===4) said=said.filter(function(t){return !/shingles|edge|roof deck|vents/.test(t)});
         if(said.length>4) said=said.slice(0,4).concat(['and more']);
-        res.innerHTML=head+said.join(', ')+'. <span style="color:var(--muted)">'+L[fix]+' is built for this.</span>';
+        res.innerHTML=head+said.join(', ')+'. <span style="color:var(--muted)">'+L[fix]+' holds through all of it.</span>';
       }
       res.classList.add('show');
     },2600);

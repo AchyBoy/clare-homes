@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="FORTIFIED Home Builder Lafayette LA | FORTIFIED Roof and Gold | Clare Homes">
 <meta property="og:description" content="Clare Homes is a certified FORTIFIED Professional Contractor in Lafayette, LA. Every home is built to FORTIFIED Roof minimum, including our FORTIFIED Gold custom home.">
-<meta property="og:image" content="https://achyboy.github.io/clare-homes/video/hero.webp?v=20261022-233733">
+<meta property="og:image" content="https://achyboy.github.io/clare-homes/video/hero.webp?v=20261022-233815">
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/icon.png">
 <script>
@@ -19,7 +19,7 @@
    fetched with a unique URL (never cached); if it names a newer build than this
    page, hop once to ?v=<build>, a URL the cache has never seen. No popup.
    deploy.sh stamps BUILD, version.json and every asset ?v= together. */
-var BUILD='20261022-233733';
+var BUILD='20261022-233815';
 (function(){
   if(location.protocol==='file:') return;
   window.__freshPending=true;   /* the visit tracker waits on this so a hop counts once */
@@ -36,7 +36,7 @@ var BUILD='20261022-233733';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20261022-233733">
+<link rel="stylesheet" href="site.css?v=20261022-233815">
 
 </head>
 <body>
@@ -56,14 +56,14 @@ var BUILD='20261022-233733';
 <main id="main">
 
 <section class="hero page-hero" aria-labelledby="fH">
-  <video data-bg autoplay muted loop playsinline preload="auto" poster="video/roof.webp?v=20261022-233733" aria-hidden="true" tabindex="-1"><source src="video/roof.mp4?v=20261022-233733" type="video/mp4"></video>
+  <video data-bg autoplay muted loop playsinline preload="auto" poster="video/roof.webp?v=20261022-233815" aria-hidden="true" tabindex="-1"><source src="video/roof.mp4?v=20261022-233815" type="video/mp4"></video>
   <div class="wrap"><span class="kicker">FORTIFIED in Lafayette, LA</span>
   <h1 id="fH">FORTIFIED homes, built by certified FORTIFIED Professional Contractors</h1>
   <p class="lead">Our homes are built to the minimum standards of FORTIFIED Roof and ENERGY STAR.</p></div>
 </section>
 
 <section class="storm" aria-labelledby="stormH">
-  <video class="bg" data-bg muted loop playsinline preload="none" poster="video/storm.jpg?v=20261022-233733" aria-hidden="true" tabindex="-1"><source src="video/storm.mp4?v=20261022-233733" type="video/mp4"></video>
+  <video class="bg" data-bg muted loop playsinline preload="none" poster="video/storm.jpg?v=20261022-233815" aria-hidden="true" tabindex="-1"><source src="video/storm.mp4?v=20261022-233815" type="video/mp4"></video>
   <div class="wrap narrow">
     <span class="kicker">Built for the storm</span>
     <h2 id="stormH">When severe weather strikes, a FORTIFIED Roof keeps the wind and rain out</h2>
@@ -363,14 +363,14 @@ var BUILD='20261022-233733';
       if(!failed.length){
         res.innerHTML=head+'everything held.'+(level===3&&power===4?' The roof stayed tied down to the foundation.':'');
       } else {
-        var fix=Math.min.apply(null,failed.map(function(p){return p.lv}));
+        var fix=Math.max.apply(null,failed.map(function(p){return p.lv}));
         var said=failed.map(function(p){ if(level===0&&p.k==='path') return 'the whole roof tore off'; if(p.k==='nails') return 'a section of roof deck tore away'; return SAY[p.k]; });
         var ORDER=['path','nails','gable','windows','garage','porch','shingles','deck','edge','vents'];
         failed.sort(function(a,b){return ORDER.indexOf(a.k)-ORDER.indexOf(b.k)});
         said=failed.map(function(p){ if(level===0&&p.k==='path') return 'the whole roof tore off'; if(p.k==='nails') return 'a section of roof deck tore away'; return SAY[p.k]; });
         if(level===0&&power===4) said=said.filter(function(t){return !/shingles|edge|roof deck|vents/.test(t)});
         if(said.length>4) said=said.slice(0,4).concat(['and more']);
-        res.innerHTML=head+said.join(', ')+'. <span style="color:var(--muted)">'+L[fix]+' is built for this.</span>';
+        res.innerHTML=head+said.join(', ')+'. <span style="color:var(--muted)">'+L[fix]+' holds through all of it.</span>';
       }
       res.classList.add('show');
     },2600);
@@ -465,11 +465,11 @@ var BUILD='20261022-233733';
   <p class="lb-cap" aria-live="polite"></p>
   <div class="lb-nav"><button type="button" class="lb-prev" aria-label="Previous photo">&#x2190;</button><button type="button" class="lb-next" aria-label="Next photo">&#x2192;</button></div>
 </div>
-<audio id="bgm" loop preload="none" playsinline><source src="music.m4a?v=20261022-233733" type="audio/mp4"></audio>
+<audio id="bgm" loop preload="none" playsinline><source src="music.m4a?v=20261022-233815" type="audio/mp4"></audio>
 <button class="music-btn" id="musicbtn" type="button" aria-pressed="false" aria-label="Play music"><span class="eq"><i></i><i></i><i></i></span><span id="musiclbl">Play music</span></button>
 <span class="demo-tag" title="A concept, not the live Clare Homes site">Concept preview by Foundation Code</span>
-<script src="data.js?v=20261022-233733"></script>
-<script src="site.js?v=20261022-233733"></script>
+<script src="data.js?v=20261022-233815"></script>
+<script src="site.js?v=20261022-233815"></script>
 <script>
 /* Music diagnostics, hidden unless the URL has ?debug=1. Ask for the Copy output. */
 window.CHLOG=function(){};
