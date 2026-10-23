@@ -28,7 +28,7 @@
 .st1 .rain line{animation-duration:1s!important}.st3 .rain line,.st4 .rain line{animation-duration:.45s!important;stroke-width:2}
 .fc-stage.shake svg{animation:shake .14s linear infinite}
 @keyframes shake{0%,100%{transform:translate(0,0)}25%{transform:translate(1.5px,-1px)}75%{transform:translate(-1.5px,1px)}}
-.strain{animation:strain .5s ease-in-out .8s 6 alternate;transform-box:fill-box;transform-origin:center bottom}
+.strain{animation:strain .5s ease-in-out .8s 7 alternate forwards;transform-box:fill-box;transform-origin:center bottom}
 @keyframes strain{to{transform:translateY(-8px) rotate(-1.2deg)}}
 .chunk{animation:chunk 1.5s ease-in 1.1s forwards;transform-box:fill-box;transform-origin:left bottom}
 @keyframes chunk{30%{transform:rotate(-12deg)}100%{transform:translate(420px,-200px) rotate(-200deg);opacity:0}}
@@ -82,18 +82,19 @@
 @keyframes peel{0%{transform:none}25%{transform:rotate(-14deg)}100%{transform:translate(380px,-140px) rotate(-260deg);opacity:0}}
 .drip{opacity:0}
 .fail .drip{animation:drip 1s ease-in 1.2s infinite}
+.done .fail .drip{animation-duration:2.4s}
 .fail .drip:nth-child(2){animation-delay:1.5s}.fail .drip:nth-child(3){animation-delay:1.8s}
 @keyframes drip{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(46px)}}
-.fail .edge-lift{animation:lift .5s ease-in-out .3s 4 alternate;transform-box:fill-box;transform-origin:right top}
+.fail .edge-lift{animation:lift .5s ease-in-out .3s 5 alternate forwards;transform-box:fill-box;transform-origin:right top}
 @keyframes lift{to{transform:rotate(-7deg)}}
-.fail .bow{animation:bow .45s ease-in-out .4s 5 alternate;transform-box:fill-box;transform-origin:center}
-@keyframes bow{to{transform:scaleX(.9) skewY(-3deg)}}
+.fail .bow{animation:bow .45s ease-in-out .4s 5 alternate forwards;transform-box:fill-box;transform-origin:center}
+@keyframes bow{to{transform:scaleX(.86) skewY(-5deg) translateY(4px)}}
 .crack{opacity:0;transition:opacity .2s}
 .fail .crack{opacity:1;transition-delay:1s}
-.fail .porch-lift{animation:plift .5s ease-in-out .6s 4 alternate;transform-box:fill-box;transform-origin:left center}
-@keyframes plift{to{transform:translateY(-9px) rotate(-3deg)}}
-.fail .gable-push{animation:gpush .45s ease-in-out .5s 5 alternate;transform-box:fill-box;transform-origin:center bottom}
-@keyframes gpush{to{transform:scale(.94,1.03)}}
+.fail .porch-lift{animation:plift .5s ease-in-out .6s 5 alternate forwards;transform-box:fill-box;transform-origin:left center}
+@keyframes plift{to{transform:translateY(-12px) rotate(-5deg)}}
+.fail .gable-push{animation:gpush .45s ease-in-out .5s 5 alternate forwards;transform-box:fill-box;transform-origin:center bottom}
+@keyframes gpush{to{transform:scale(.9,1.05) rotate(2deg)}}
 .flow{stroke:#f2cd6b;stroke-width:4;stroke-dasharray:14 200;stroke-dashoffset:0;opacity:0}
 .storming.lvl3 .flow{opacity:1;animation:flow 1.2s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-214}}
@@ -238,7 +239,8 @@
     hot.appendChild(g); p.g=g;
   });
   function pick(i){sel=i;paint();}
-  function setLevel(l){level=l;paint();}
+  function clearDamage(){ document.querySelectorAll('#fcSvg .fail, #fcSvg .strain, #fcSvg .chunk, #fcSvg .roofoff').forEach(function(n){n.classList.remove('fail','strain','chunk','roofoff')}); svg.classList.remove('roofgone','done'); res.classList.remove('show'); }
+  function setLevel(l){level=l;clearDamage();paint();}
   function paint(){
     ['lvl0','lvl1','lvl2','lvl3'].forEach(function(c){svg.classList.remove(c)}); svg.classList.add('lvl'+level);
     [].forEach.call(lvls.children,function(b){var on=+b.dataset.l===level;b.classList.toggle('on',on);b.classList.toggle('gold',on&&level===3);b.setAttribute('aria-selected',on)});
@@ -262,11 +264,11 @@
   var STORM=['','a strong thunderstorm','a Category 1 hurricane','a Category 3 hurricane','an EF-2 tornado'];
   var sp=document.getElementById('fcStorm');
   function paintStorm(){ [].forEach.call(sp.children,function(b){ var on=+b.dataset.s===power; b.classList.toggle('on',on); b.setAttribute('aria-checked',on) }); }
-  sp.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b&&!storming){ power=+b.dataset.s; paintStorm(); res.classList.remove('show'); run.lastChild.textContent='Run the storm'; } });
+  sp.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b&&!storming){ power=+b.dataset.s; paintStorm(); clearDamage(); run.lastChild.textContent='Run the storm'; } });
   paintStorm();
   function cap(t){ return t.charAt(0).toUpperCase()+t.slice(1) }
   run.addEventListener('click',function(){
-    if(storming) return; storming=true; run.disabled=true; res.classList.remove('show');
+    if(storming) return; storming=true; run.disabled=true; clearDamage(); void svg.getBoundingClientRect();
     stage.classList.add('sky','st'+power); svg.classList.add('storming','st'+power); if(power>=3) stage.classList.add('shake');
     var failed=P.filter(function(p){ return p.lv>level && power>=BR[p.k] });
     failed.forEach(function(p){
@@ -298,7 +300,7 @@
     },2600);
     setTimeout(function(){
       svg.classList.remove('storming','st1','st2','st3','st4'); stage.classList.remove('sky','st1','st2','st3','st4','shake');
-      document.querySelectorAll('#fcSvg .fail, #fcSvg .strain, #fcSvg .chunk, #fcSvg .roofoff').forEach(function(n){n.classList.remove('fail','strain','chunk','roofoff')}); svg.classList.remove('roofgone');
+      svg.classList.add('done');
       storming=false; run.disabled=false; run.lastChild.textContent='Run it again';
     },power===4&&level===0?7200:5600);
   });
