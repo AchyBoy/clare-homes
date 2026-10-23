@@ -15,8 +15,8 @@
 .fc-bar .lv b{color:var(--navy)}
 .fc-run{border:0;background:var(--navy);color:#fff;font:600 14px/1 var(--sans);padding:12px 16px;border-radius:999px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
 .fc-run[disabled]{opacity:.5}
-.fc-result{position:absolute;left:12px;right:12px;top:12px;background:rgba(255,255,255,.95);border-radius:10px;padding:10px 14px;font:500 14px/1.4 var(--sans);color:var(--navy);box-shadow:var(--shadow);opacity:0;transform:translateY(-8px);transition:.35s;pointer-events:none}
-.fc-result.show{opacity:1;transform:none}
+.fc-result{background:#fff8e6;border-top:1px solid #ecd9a6;padding:0 14px;max-height:0;overflow:hidden;font:500 14.5px/1.45 var(--sans);color:var(--navy);transition:max-height .45s ease,padding .45s ease}
+.fc-result.show{max-height:140px;padding:12px 14px}
 .fc-result b{font-family:var(--serif)}
 .fc-panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;min-height:100%}
 .fc-panel .tag{display:inline-block;font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border-radius:999px;background:var(--cream);color:var(--navy)}
@@ -96,7 +96,6 @@
 
 <div class="fc-grid">
   <div class="fc-stage rv" id="fcStage">
-    <div class="fc-result" id="fcResult" role="status"></div>
     <svg viewBox="0 0 640 400" id="fcSvg" aria-label="Drawing of a house showing FORTIFIED construction details">
       <defs><clipPath id="fcRoofClip"><polygon points="96,216 232,118 408,118 544,216"/></clipPath></defs>
       <!-- ground -->
@@ -158,6 +157,7 @@
       <!-- hotspots -->
       <g id="fcHot"></g>
     </svg>
+    <div class="fc-result" id="fcResult" role="status"></div>
     <div class="fc-bar"><span class="lv" id="fcLv"></span><button type="button" class="fc-run" id="fcRun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h11a3 3 0 1 0-3-3M3 16h15a3 3 0 1 1-3 3M3 12h8"/></svg>Run the storm</button></div>
   </div>
 

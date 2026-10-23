@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="FORTIFIED Home Builder Lafayette LA | FORTIFIED Roof and Gold | Clare Homes">
 <meta property="og:description" content="Clare Homes is a certified FORTIFIED Professional Contractor in Lafayette, LA. Every home is built to FORTIFIED Roof minimum, including our FORTIFIED Gold custom home.">
-<meta property="og:image" content="https://achyboy.github.io/clare-homes/video/hero.webp?v=20261022-231915">
+<meta property="og:image" content="https://achyboy.github.io/clare-homes/video/hero.webp?v=20261022-231954">
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/icon.png">
 <script>
@@ -19,7 +19,7 @@
    fetched with a unique URL (never cached); if it names a newer build than this
    page, hop once to ?v=<build>, a URL the cache has never seen. No popup.
    deploy.sh stamps BUILD, version.json and every asset ?v= together. */
-var BUILD='20261022-231915';
+var BUILD='20261022-231954';
 (function(){
   if(location.protocol==='file:') return;
   window.__freshPending=true;   /* the visit tracker waits on this so a hop counts once */
@@ -36,7 +36,7 @@ var BUILD='20261022-231915';
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20261022-231915">
+<link rel="stylesheet" href="site.css?v=20261022-231954">
 
 </head>
 <body>
@@ -56,14 +56,14 @@ var BUILD='20261022-231915';
 <main id="main">
 
 <section class="hero page-hero" aria-labelledby="fH">
-  <video data-bg autoplay muted loop playsinline preload="auto" poster="video/roof.webp?v=20261022-231915" aria-hidden="true" tabindex="-1"><source src="video/roof.mp4?v=20261022-231915" type="video/mp4"></video>
+  <video data-bg autoplay muted loop playsinline preload="auto" poster="video/roof.webp?v=20261022-231954" aria-hidden="true" tabindex="-1"><source src="video/roof.mp4?v=20261022-231954" type="video/mp4"></video>
   <div class="wrap"><span class="kicker">FORTIFIED in Lafayette, LA</span>
   <h1 id="fH">FORTIFIED homes, built by certified FORTIFIED Professional Contractors</h1>
   <p class="lead">Our homes are built to the minimum standards of FORTIFIED Roof and ENERGY STAR.</p></div>
 </section>
 
 <section class="storm" aria-labelledby="stormH">
-  <video class="bg" data-bg muted loop playsinline preload="none" poster="video/storm.jpg?v=20261022-231915" aria-hidden="true" tabindex="-1"><source src="video/storm.mp4?v=20261022-231915" type="video/mp4"></video>
+  <video class="bg" data-bg muted loop playsinline preload="none" poster="video/storm.jpg?v=20261022-231954" aria-hidden="true" tabindex="-1"><source src="video/storm.mp4?v=20261022-231954" type="video/mp4"></video>
   <div class="wrap narrow">
     <span class="kicker">Built for the storm</span>
     <h2 id="stormH">When severe weather strikes, a FORTIFIED Roof keeps the wind and rain out</h2>
@@ -93,8 +93,8 @@ var BUILD='20261022-231915';
 .fc-bar .lv b{color:var(--navy)}
 .fc-run{border:0;background:var(--navy);color:#fff;font:600 14px/1 var(--sans);padding:12px 16px;border-radius:999px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
 .fc-run[disabled]{opacity:.5}
-.fc-result{position:absolute;left:12px;right:12px;top:12px;background:rgba(255,255,255,.95);border-radius:10px;padding:10px 14px;font:500 14px/1.4 var(--sans);color:var(--navy);box-shadow:var(--shadow);opacity:0;transform:translateY(-8px);transition:.35s;pointer-events:none}
-.fc-result.show{opacity:1;transform:none}
+.fc-result{background:#fff8e6;border-top:1px solid #ecd9a6;padding:0 14px;max-height:0;overflow:hidden;font:500 14.5px/1.45 var(--sans);color:var(--navy);transition:max-height .45s ease,padding .45s ease}
+.fc-result.show{max-height:140px;padding:12px 14px}
 .fc-result b{font-family:var(--serif)}
 .fc-panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px;min-height:100%}
 .fc-panel .tag{display:inline-block;font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border-radius:999px;background:var(--cream);color:var(--navy)}
@@ -174,7 +174,6 @@ var BUILD='20261022-231915';
 
 <div class="fc-grid">
   <div class="fc-stage rv" id="fcStage">
-    <div class="fc-result" id="fcResult" role="status"></div>
     <svg viewBox="0 0 640 400" id="fcSvg" aria-label="Drawing of a house showing FORTIFIED construction details">
       <defs><clipPath id="fcRoofClip"><polygon points="96,216 232,118 408,118 544,216"/></clipPath></defs>
       <!-- ground -->
@@ -236,6 +235,7 @@ var BUILD='20261022-231915';
       <!-- hotspots -->
       <g id="fcHot"></g>
     </svg>
+    <div class="fc-result" id="fcResult" role="status"></div>
     <div class="fc-bar"><span class="lv" id="fcLv"></span><button type="button" class="fc-run" id="fcRun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h11a3 3 0 1 0-3-3M3 16h15a3 3 0 1 1-3 3M3 12h8"/></svg>Run the storm</button></div>
   </div>
 
@@ -410,11 +410,11 @@ var BUILD='20261022-231915';
   <p class="lb-cap" aria-live="polite"></p>
   <div class="lb-nav"><button type="button" class="lb-prev" aria-label="Previous photo">&#x2190;</button><button type="button" class="lb-next" aria-label="Next photo">&#x2192;</button></div>
 </div>
-<audio id="bgm" loop preload="none" playsinline><source src="music.m4a?v=20261022-231915" type="audio/mp4"></audio>
+<audio id="bgm" loop preload="none" playsinline><source src="music.m4a?v=20261022-231954" type="audio/mp4"></audio>
 <button class="music-btn" id="musicbtn" type="button" aria-pressed="false" aria-label="Play music"><span class="eq"><i></i><i></i><i></i></span><span id="musiclbl">Play music</span></button>
 <span class="demo-tag" title="A concept, not the live Clare Homes site">Concept preview by Foundation Code</span>
-<script src="data.js?v=20261022-231915"></script>
-<script src="site.js?v=20261022-231915"></script>
+<script src="data.js?v=20261022-231954"></script>
+<script src="site.js?v=20261022-231954"></script>
 <script>
 /* Music diagnostics, hidden unless the URL has ?debug=1. Ask for the Copy output. */
 window.CHLOG=function(){};
