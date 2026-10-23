@@ -30,6 +30,11 @@
 @keyframes shake{0%,100%{transform:translate(0,0)}25%{transform:translate(1.5px,-1px)}75%{transform:translate(-1.5px,1px)}}
 .strain{animation:strain .5s ease-in-out .8s 6 alternate;transform-box:fill-box;transform-origin:center bottom}
 @keyframes strain{to{transform:translateY(-8px) rotate(-1.2deg)}}
+.chunk{animation:chunk 1.5s ease-in 1.1s forwards;transform-box:fill-box;transform-origin:left bottom}
+@keyframes chunk{30%{transform:rotate(-12deg)}100%{transform:translate(420px,-200px) rotate(-200deg);opacity:0}}
+.roofoff{animation:roofoff 2s cubic-bezier(.5,0,.8,.4) 1.3s forwards;transform-box:fill-box;transform-origin:left bottom}
+@keyframes roofoff{15%{transform:translateY(-14px) rotate(-3deg)}35%{transform:translate(30px,-60px) rotate(-8deg)}100%{transform:translate(520px,-320px) rotate(-38deg);opacity:0}}
+.fc-attic{opacity:0;transition:opacity .4s 2.2s}.roofgone .fc-attic{opacity:1}
 @media (max-width:620px){.fc-storm{grid-template-columns:1fr 1fr}.fc-storm button:nth-child(3){border-left:0}.fc-storm button:nth-child(n+3){border-top:1px solid var(--line)}}
 @media (prefers-reduced-motion:reduce){.fc-stage.shake svg,.strain{animation:none}}
 .fc-result{background:#fff8e6;border-top:1px solid #ecd9a6;padding:0 14px;max-height:0;overflow:hidden;font:500 14.5px/1.45 var(--sans);color:var(--navy);transition:max-height .45s ease,padding .45s ease}
@@ -123,18 +128,19 @@
       <g stroke="#e4ddcf" stroke-width="1"><path d="M120 232H520M120 252H520M120 272H520M120 292H520M120 312H520M120 332H520"/></g>
       <!-- attic water (shows when deck unsealed) -->
       <g class="fc-water" id="fcWater"><circle class="drip" cx="200" cy="222" r="3.5" fill="#4a90d9"/><circle class="drip" cx="300" cy="224" r="3.5" fill="#4a90d9"/><circle class="drip" cx="440" cy="222" r="3.5" fill="#4a90d9"/></g>
+      <g class="fc-attic"><path d="M120 212L230 140M200 212L250 150M520 212L410 140M440 212L390 150" stroke="#8a6d4a" stroke-width="3"/><path d="M120 212H520" stroke="#8a6d4a" stroke-width="4"/></g>
       <!-- roof -->
       <g id="fcRoof">
         <polygon points="96,216 232,118 408,118 544,216" fill="#5b6576" stroke="#14233f" stroke-width="2"/>
         <g clip-path="url(#fcRoofClip)" stroke="#4a5363" stroke-width="1.2"><path d="M80 136H560M80 154H560M80 172H560M80 190H560M80 208H560"/></g>
         <!-- cutaway: deck boards, nails, seam tape -->
-        <g transform="translate(150 150)">
+        <g id="fcDeck"><g transform="translate(150 150)">
           <polygon points="0,52 62,8 128,8 128,52" fill="#d9b98a" stroke="#14233f" stroke-width="1.4"/>
           <path d="M44 21V52M86 8V52" stroke="#a8875a" stroke-width="1.2"/>
           <g fill="#6b5a44"><circle cx="20" cy="46" r="1.6"/><circle cx="60" cy="40" r="1.6"/><circle cx="100" cy="44" r="1.6"/><circle cx="104" cy="20" r="1.6"/></g>
           <g class="up-only need1" fill="#9a7414"><circle cx="40" cy="30" r="1.8"/><circle cx="40" cy="44" r="1.8"/><circle cx="48" cy="30" r="1.8"/><circle cx="48" cy="44" r="1.8"/><circle cx="82" cy="16" r="1.8"/><circle cx="82" cy="30" r="1.8"/><circle cx="82" cy="44" r="1.8"/><circle cx="90" cy="16" r="1.8"/><circle cx="90" cy="30" r="1.8"/><circle cx="90" cy="44" r="1.8"/></g>
           <path class="up-only need1" d="M44 20V52M86 8V52" stroke="#f2cd6b" stroke-width="5" opacity=".9"/>
-        </g>
+        </g></g>
         <!-- loose shingles that peel in a storm -->
         <g id="fcShingles" fill="#6f7a8c" stroke="#3d4553" stroke-width="1">
           <rect class="shingle" x="300" y="128" width="30" height="14"/><rect class="shingle" x="340" y="146" width="30" height="14"/>
@@ -267,7 +273,11 @@
       if(p.el) document.getElementById(p.el).classList.add('fail');
       if(p.k==='nails') document.getElementById('fcShingles').classList.add('fail');
       if(p.k==='vents') document.getElementById('fcWater').classList.add('fail');
-      if(p.k==='path'){ document.getElementById('fcRoof').classList.add('strain'); document.getElementById('fcGable').classList.add('strain'); }
+      if(p.k==='path'){
+        if(level===0){ document.getElementById('fcRoof').classList.add('roofoff'); document.getElementById('fcGable').classList.add('roofoff'); svg.classList.add('roofgone'); }
+        else { document.getElementById('fcRoof').classList.add('strain'); document.getElementById('fcGable').classList.add('strain'); }
+      }
+      if(p.k==='nails'&&power<4) document.getElementById('fcDeck').classList.add('chunk');
     });
     setTimeout(function(){ stage.classList.remove('shake'); },2400);
     setTimeout(function(){
@@ -276,15 +286,17 @@
         res.innerHTML=head+'everything held.'+(level===3&&power===4?' The roof stayed tied down to the foundation.':'');
       } else {
         var fix=Math.min.apply(null,failed.map(function(p){return p.lv}));
-        res.innerHTML=head+failed.map(function(p){return SAY[p.k]}).join(', ')+'. <span style="color:var(--muted)">'+L[fix]+' is built for this.</span>';
+        var said=failed.map(function(p){ if(level===0&&p.k==='path') return 'the whole roof tore off'; if(p.k==='nails') return 'a section of roof deck tore away'; return SAY[p.k]; });
+        if(level===0&&power===4) said=['the whole roof tore off'].concat(said.filter(function(t){return t!=='the whole roof tore off'&&!/shingles|edge|deck|vents/.test(t)}));
+        res.innerHTML=head+said.join(', ')+'. <span style="color:var(--muted)">'+L[fix]+' is built for this.</span>';
       }
       res.classList.add('show');
     },2600);
     setTimeout(function(){
       svg.classList.remove('storming','st1','st2','st3','st4'); stage.classList.remove('sky','st1','st2','st3','st4','shake');
-      document.querySelectorAll('#fcSvg .fail, #fcSvg .strain').forEach(function(n){n.classList.remove('fail','strain')});
+      document.querySelectorAll('#fcSvg .fail, #fcSvg .strain, #fcSvg .chunk, #fcSvg .roofoff').forEach(function(n){n.classList.remove('fail','strain','chunk','roofoff')}); svg.classList.remove('roofgone');
       storming=false; run.disabled=false; run.lastChild.textContent='Run it again';
-    },5600);
+    },power===4&&level===0?7200:5600);
   });
   paint();
 })();
