@@ -15,6 +15,23 @@
 .fc-bar .lv b{color:var(--navy)}
 .fc-run{border:0;background:var(--navy);color:#fff;font:600 14px/1 var(--sans);padding:12px 16px;border-radius:999px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
 .fc-run[disabled]{opacity:.5}
+.fc-storm{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:#fff}
+.fc-storm button{border:0;border-left:1px solid var(--line);background:#fff;padding:10px 6px;font:600 13px/1.2 var(--sans);color:var(--navy);cursor:pointer}
+.fc-storm button:first-child{border-left:0}
+.fc-storm button small{display:block;font:500 11px/1.2 var(--sans);color:var(--muted);margin-top:3px}
+.fc-storm button.on{background:var(--navy);color:#fff}.fc-storm button.on small{color:var(--on-dark-2)}
+.fc-storm button[data-s="4"].on{background:#5a1f1f}
+.fc-stage.sky.st3{background:linear-gradient(#3e4858,#7b8796 70%)}
+.fc-stage.sky.st4{background:linear-gradient(#262c36,#5b6573 70%)}
+.st1 .wind path{animation-duration:1.6s!important}.st2 .wind path{animation-duration:1.1s!important}
+.st3 .wind path{animation-duration:.75s!important;stroke-width:2.8}.st4 .wind path{animation-duration:.5s!important;stroke-width:3.4}
+.st1 .rain line{animation-duration:1s!important}.st3 .rain line,.st4 .rain line{animation-duration:.45s!important;stroke-width:2}
+.fc-stage.shake svg{animation:shake .14s linear infinite}
+@keyframes shake{0%,100%{transform:translate(0,0)}25%{transform:translate(1.5px,-1px)}75%{transform:translate(-1.5px,1px)}}
+.strain{animation:strain .5s ease-in-out .8s 6 alternate;transform-box:fill-box;transform-origin:center bottom}
+@keyframes strain{to{transform:translateY(-8px) rotate(-1.2deg)}}
+@media (max-width:620px){.fc-storm{grid-template-columns:1fr 1fr}.fc-storm button:nth-child(3){border-left:0}.fc-storm button:nth-child(n+3){border-top:1px solid var(--line)}}
+@media (prefers-reduced-motion:reduce){.fc-stage.shake svg,.strain{animation:none}}
 .fc-result{background:#fff8e6;border-top:1px solid #ecd9a6;padding:0 14px;max-height:0;overflow:hidden;font:500 14.5px/1.45 var(--sans);color:var(--navy);transition:max-height .45s ease,padding .45s ease}
 .fc-result.show{max-height:140px;padding:12px 14px}
 .fc-result b{font-family:var(--serif)}
@@ -85,7 +102,7 @@
 
 <div class="fc-head rv"><span class="kicker">See the difference</span>
 <h2 id="fcH">Same house. Built two ways.</h2>
-<p class="lead">Pick a level, tap any part of the house, then run the storm. Every Clare home starts at FORTIFIED Roof.</p></div>
+<p class="lead">Pick a level, pick a storm, then run it. Tap any part of the house to see how it is built. Every Clare home starts at FORTIFIED Roof.</p></div>
 
 <div class="fc-levels" role="tablist" aria-label="Construction level" id="fcLevels">
   <button type="button" role="tab" data-l="0">Conventional</button>
@@ -158,6 +175,7 @@
       <g id="fcHot"></g>
     </svg>
     <div class="fc-result" id="fcResult" role="status"></div>
+    <div class="fc-storm" id="fcStorm" role="radiogroup" aria-label="Storm strength"><button type="button" data-s="1" role="radio">Thunderstorm<small>58+ mph</small></button><button type="button" data-s="2" role="radio">Cat 1 hurricane<small>74 to 95 mph</small></button><button type="button" data-s="3" role="radio">Cat 3 hurricane<small>111 to 129 mph</small></button><button type="button" data-s="4" role="radio">EF-2 tornado<small>111 to 135 mph</small></button></div>
     <div class="fc-bar"><span class="lv" id="fcLv"></span><button type="button" class="fc-run" id="fcRun"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h11a3 3 0 1 0-3-3M3 16h15a3 3 0 1 1-3 3M3 12h8"/></svg>Run the storm</button></div>
   </div>
 
@@ -231,21 +249,42 @@
     panel.querySelectorAll('.fc-list button').forEach(function(b){b.addEventListener('click',function(){pick(+b.dataset.j)})});
   }
   lvls.addEventListener('click',function(e){var b=e.target.closest('button');if(b&&!storming)setLevel(+b.dataset.l)});
-  var storming=false;
-  var OUT=['<b>Conventional:</b> shingles off, the edge peeled, water in the attic, the garage door and gable pushed in.',
-           '<b>FORTIFIED Roof:</b> the roof held and stayed dry. Windows, garage door and porch were still exposed.',
-           '<b>FORTIFIED Silver:</b> the roof and every opening held.',
-           '<b>FORTIFIED Gold:</b> everything held, with the roof tied all the way down to the foundation.'];
+  var storming=false, power=2;
+  var BR={edge:1,shingles:2,deck:2,vents:2,garage:2,nails:3,gable:3,windows:3,porch:3,path:4};
+  var SAY={edge:'the roof edge peeled up',shingles:'shingles blew off',deck:'rain poured in through the roof deck',vents:'rain blew in through the attic vents',
+           garage:'the garage door blew in',nails:'roof deck panels pulled loose',gable:'the gable end pushed in',windows:'windows broke',porch:'the porch lifted',path:'the roof strained against the walls'};
+  var STORM=['','a strong thunderstorm','a Category 1 hurricane','a Category 3 hurricane','an EF-2 tornado'];
+  var sp=document.getElementById('fcStorm');
+  function paintStorm(){ [].forEach.call(sp.children,function(b){ var on=+b.dataset.s===power; b.classList.toggle('on',on); b.setAttribute('aria-checked',on) }); }
+  sp.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b&&!storming){ power=+b.dataset.s; paintStorm(); res.classList.remove('show'); run.lastChild.textContent='Run the storm'; } });
+  paintStorm();
+  function cap(t){ return t.charAt(0).toUpperCase()+t.slice(1) }
   run.addEventListener('click',function(){
     if(storming) return; storming=true; run.disabled=true; res.classList.remove('show');
-    stage.classList.add('sky'); svg.classList.add('storming');
-    P.forEach(function(p){ if(p.el&&p.lv>level) document.getElementById(p.el).classList.add('fail'); });
-    setTimeout(function(){ res.innerHTML=OUT[level]; res.classList.add('show'); },2600);
+    stage.classList.add('sky','st'+power); svg.classList.add('storming','st'+power); if(power>=3) stage.classList.add('shake');
+    var failed=P.filter(function(p){ return p.lv>level && power>=BR[p.k] });
+    failed.forEach(function(p){
+      if(p.el) document.getElementById(p.el).classList.add('fail');
+      if(p.k==='nails') document.getElementById('fcShingles').classList.add('fail');
+      if(p.k==='vents') document.getElementById('fcWater').classList.add('fail');
+      if(p.k==='path'){ document.getElementById('fcRoof').classList.add('strain'); document.getElementById('fcGable').classList.add('strain'); }
+    });
+    setTimeout(function(){ stage.classList.remove('shake'); },2400);
     setTimeout(function(){
-      svg.classList.remove('storming'); stage.classList.remove('sky');
-      document.querySelectorAll('#fcSvg .fail').forEach(function(n){n.classList.remove('fail')});
+      var head='<b>'+L[level]+'</b> in '+STORM[power]+': ';
+      if(!failed.length){
+        res.innerHTML=head+'everything held.'+(level===3&&power===4?' The roof stayed tied down to the foundation.':'');
+      } else {
+        var fix=Math.min.apply(null,failed.map(function(p){return p.lv}));
+        res.innerHTML=head+failed.map(function(p){return SAY[p.k]}).join(', ')+'. <span style="color:var(--muted)">'+L[fix]+' is built for this.</span>';
+      }
+      res.classList.add('show');
+    },2600);
+    setTimeout(function(){
+      svg.classList.remove('storming','st1','st2','st3','st4'); stage.classList.remove('sky','st1','st2','st3','st4','shake');
+      document.querySelectorAll('#fcSvg .fail, #fcSvg .strain').forEach(function(n){n.classList.remove('fail','strain')});
       storming=false; run.disabled=false; run.lastChild.textContent='Run it again';
-    },5200);
+    },5600);
   });
   paint();
 })();
