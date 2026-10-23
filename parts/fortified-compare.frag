@@ -76,7 +76,10 @@
 .storming.lvl3 .flow{opacity:1;animation:flow 1.2s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-214}}
 @media (max-width:900px){.fc-grid{grid-template-columns:1fr}}
-@media (max-width:520px){.fc-levels{width:100%;border-radius:14px}.fc-levels button{flex:1;padding:10px 8px;font-size:13px}.fc-bar{flex-wrap:wrap}.fc-run{width:100%;justify-content:center}}
+.fc-run svg{width:16px!important;height:16px!important;flex:none}
+@media (max-width:620px){.fc-levels{display:grid;grid-template-columns:repeat(4,1fr);width:100%;border-radius:14px}.fc-levels button{padding:10px 4px;font-size:12.5px;white-space:normal;line-height:1.15}
+  .fc-bar{flex-wrap:wrap}.fc-run{width:100%;justify-content:center}
+  .hs circle{r:19px}.hs text{font-size:19px;transform:translateY(3px)}}
 @media (prefers-reduced-motion:reduce){.hs.up .pulse,.storming .wind path,.storming .rain line{animation:none}}
 </style>
 
