@@ -266,6 +266,8 @@ def page_index():
 
 {storm_section()}
 
+{open('parts/fortified-compare.frag').read()}
+
 <section class="cream leaf-bg" aria-labelledby="zeH"><div class="wrap split">
   <div class="rv"><span class="kicker" style="color:var(--green)">Zero Energy Ready · ENERGY STAR · Indoor airPLUS</span>
     <h2 id="zeH">A Zero Energy Ready Home represents the future of home building</h2>
