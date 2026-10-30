@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Custom Home Builder Lafayette LA | Projects | Clare Homes">
 <meta property="og:description" content="See Clare Homes projects: FORTIFIED custom homes, Zero Energy Ready homes, ADUs, sold homes in Youngsville and renovations across Lafayette and the Gulf Coast.">
-<meta property="og:image" content="https://achyboy.github.io/clare-homes/video/hero.webp?v=20261023-065127">
+<meta property="og:image" content="https://achyboy.github.io/clare-homes/video/hero.webp?v=20261029-203818">
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/icon.png">
 <script>
@@ -19,27 +19,33 @@
    fetched with a unique URL (never cached); if it names a newer build than this
    page, hop once to ?v=<build>, a URL the cache has never seen. No popup.
    deploy.sh stamps BUILD, version.json and every asset ?v= together. */
-var BUILD='20261023-065127';
+var BUILD='20261029-203818';
 (function(){
   if(location.protocol==='file:') return;
   window.__freshPending=true;   /* the visit tracker waits on this so a hop counts once */
   function done(){ window.__freshPending=false }
   setTimeout(done,6000);
-  fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
-    if(!j||!j.build||j.build===BUILD) return done();
-    var k='ch-fresh-'+j.build; try{ if(sessionStorage.getItem(k)) return done(); sessionStorage.setItem(k,'1'); }catch(e){}
-    var u=new URL(location.href); u.searchParams.set('v',j.build); location.replace(u.toString());
-  }).catch(done);
+  function check(first){
+    fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+      if(!j||!j.build||j.build===BUILD) return done();
+      var k='ch-fresh-'+j.build; try{ if(sessionStorage.getItem(k)) return done(); sessionStorage.setItem(k,'1'); }catch(e){}
+      var u=new URL(location.href); u.searchParams.set('v',j.build); location.replace(u.toString());
+    }).catch(done);
+  }
+  check(true);
+  /* a Home Screen copy is rarely reloaded, so check again whenever it comes back on screen */
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) check(false); });
+  addEventListener('pageshow',function(e){ if(e.persisted) check(false); });
 })();
 </script>
 <script src="/visits/t.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20261023-065127">
+<link rel="stylesheet" href="site.css?v=20261029-203818">
 
 </head>
-<body>
+<body data-swap>
 <a class="skip" href="#main">Skip to content</a>
 <div class="season" role="status"><span class="dot" aria-hidden="true"></span><span id="seasonText">Hurricane season runs June 1 to November 30</span></div>
 <header class="hdr">
@@ -103,18 +109,18 @@ var BUILD='20261023-065127';
   <p class="lb-cap" aria-live="polite"></p>
   <div class="lb-nav"><button type="button" class="lb-prev" aria-label="Previous photo">&#x2190;</button><button type="button" class="lb-next" aria-label="Next photo">&#x2192;</button></div>
 </div>
-<audio id="bgm" loop preload="none" playsinline><source src="music.m4a?v=20261023-065127" type="audio/mp4"></audio>
-<button class="music-btn" id="musicbtn" type="button" aria-pressed="false" aria-label="Play music"><span class="eq"><i></i><i></i><i></i></span><span id="musiclbl">Play music</span></button>
-<span class="demo-tag" title="A concept, not the live Clare Homes site">Concept preview by Foundation Code</span>
-<script src="data.js?v=20261023-065127"></script>
-<script src="site.js?v=20261023-065127"></script>
+<audio data-keep id="bgm" loop preload="none" playsinline><source src="music.m4a?v=20261029-203818" type="audio/mp4"></audio>
+<button data-keep class="music-btn" id="musicbtn" type="button" aria-pressed="false" aria-label="Play music"><span class="eq"><i></i><i></i><i></i></span><span id="musiclbl">Play music</span></button>
+<span class="demo-tag" data-keep title="A concept, not the live Clare Homes site">Concept preview by Foundation Code</span>
+<script src="data.js?v=20261029-203818"></script>
+<script src="site.js?v=20261029-203818"></script>
 <script>
 /* Music diagnostics, hidden unless the URL has ?debug=1. Ask for the Copy output. */
 window.CHLOG=function(){};
 (function(){
   if(!/[?&]debug=1/.test(location.search)) return;
   var t0=Date.now(), lines=[];
-  var box=document.createElement('div'); box.id='chdbg';
+  var box=document.createElement('div'); box.id='chdbg'; box.setAttribute('data-keep','');
   box.innerHTML='<div class="hd"><b>MUSIC LOG</b><button id="chreset">Reset</button><button id="chcopy">Copy</button><button id="chclose">Hide</button></div><div class="body" id="chbody"></div>';
   document.body.appendChild(box);
   document.getElementById('chclose').onclick=function(){box.remove()};
@@ -240,6 +246,43 @@ window.CHLOG=function(){};
   });
   el.addEventListener('pause',function(){ if(wanted && playing){ audibleBlocked=true; CHLOG('paused by the browser','bad'); lost(); } });
 
+  /* Leaving for a page with no music (nav.js falls back to a normal load if a
+     swap fails): a soft fade, then go. Desktop and Android fade el.volume.
+     iPhone ignores el.volume, so there the fade runs through a Web Audio gain
+     made inside the tap that is leaving (a tap is what lets an audio context
+     run). That is the only Web Audio on this site and it exists for the last
+     0.7 s of the page, after which the page is gone, so the iOS "suspended
+     context swallows the sound" trap cannot bite. done() always runs, at most
+     ~0.9 s later. Ported from the Van Alan site. */
+  window.CH_MUSIC_LEAVE=function(done){
+    var fired=false; function go(){ if(fired) return; fired=true; done() }
+    if(!playing||el.paused){ go(); return }
+    try{ sessionStorage.setItem('ch-music-pos',JSON.stringify({t:el.currentTime,at:Date.now()})) }catch(e){}
+    playing=false; detach();
+    setTimeout(go,900);
+    if(volumeWorks){ fadeTo(0,function(){ el.pause(); go() }); return }
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext, ctx=new AC(), src=ctx.createMediaElementSource(el), g=ctx.createGain();
+      src.connect(g); g.connect(ctx.destination);
+      var t=ctx.currentTime; g.gain.setValueAtTime(1,t); g.gain.linearRampToValueAtTime(0.0001,t+0.7);
+      setTimeout(function(){ try{ el.pause() }catch(e){} go() },720);
+    }catch(e){ try{ el.pause() }catch(e2){} go() }
+  };
+
+  /* A hard page load restarts the song. Remember the spot on the way out and
+     pick it up on the way in, so it reads as one song, not a restart. Only if
+     it was playing, and only for a while. */
+  addEventListener('pagehide',function(){
+    try{ if(playing&&!el.paused) sessionStorage.setItem('ch-music-pos',JSON.stringify({t:el.currentTime,at:Date.now()})) }catch(e){}
+  });
+  (function(){
+    var pos=null; try{ pos=JSON.parse(sessionStorage.getItem('ch-music-pos')||'null'); sessionStorage.removeItem('ch-music-pos') }catch(e){}
+    if(!pos||Date.now()-pos.at>30*60*1000||!(pos.t>0)) return;
+    function seek(){ try{ if(el.currentTime<0.5&&isFinite(el.duration)) el.currentTime=pos.t%el.duration }catch(e){} }
+    if(el.readyState>=1) seek(); else el.addEventListener('loadedmetadata',seek,{once:true});
+    CHLOG('resuming at '+pos.t.toFixed(1)+'s');
+  })();
+
   paint();
   if(wanted) attach();
   CHLOG('init wanted='+wanted);
@@ -250,5 +293,6 @@ window.CHLOG=function(){};
   });
 })();
 </script>
+<script src="nav.js?v=20261029-203818"></script>
 </body>
 </html>

@@ -44,6 +44,50 @@ for a, b in [('LBLOG', 'CHLOG'), ('lbdbg', 'chdbg'), ('lbreset', 'chreset'), ('l
     assert a in music, a
     music = music.replace(a, b)
 assert 'lb' not in re.sub(r'[a-z]lb|lb[a-z]', '', music.replace('lbl', '')), 'leftover lb name'
+# nav.js swaps pages in place so the song plays straight through: the debug box survives a swap,
+# and the leave-fade + resume-after-a-hard-load pieces from the Van Alan site go in before the first paint().
+assert music.count("box.id='chdbg';") == 1
+music = music.replace("box.id='chdbg';", "box.id='chdbg'; box.setAttribute('data-keep','');")
+LEAVE = r'''
+  /* Leaving for a page with no music (nav.js falls back to a normal load if a
+     swap fails): a soft fade, then go. Desktop and Android fade el.volume.
+     iPhone ignores el.volume, so there the fade runs through a Web Audio gain
+     made inside the tap that is leaving (a tap is what lets an audio context
+     run). That is the only Web Audio on this site and it exists for the last
+     0.7 s of the page, after which the page is gone, so the iOS "suspended
+     context swallows the sound" trap cannot bite. done() always runs, at most
+     ~0.9 s later. Ported from the Van Alan site. */
+  window.CH_MUSIC_LEAVE=function(done){
+    var fired=false; function go(){ if(fired) return; fired=true; done() }
+    if(!playing||el.paused){ go(); return }
+    try{ sessionStorage.setItem('ch-music-pos',JSON.stringify({t:el.currentTime,at:Date.now()})) }catch(e){}
+    playing=false; detach();
+    setTimeout(go,900);
+    if(volumeWorks){ fadeTo(0,function(){ el.pause(); go() }); return }
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext, ctx=new AC(), src=ctx.createMediaElementSource(el), g=ctx.createGain();
+      src.connect(g); g.connect(ctx.destination);
+      var t=ctx.currentTime; g.gain.setValueAtTime(1,t); g.gain.linearRampToValueAtTime(0.0001,t+0.7);
+      setTimeout(function(){ try{ el.pause() }catch(e){} go() },720);
+    }catch(e){ try{ el.pause() }catch(e2){} go() }
+  };
+
+  /* A hard page load restarts the song. Remember the spot on the way out and
+     pick it up on the way in, so it reads as one song, not a restart. Only if
+     it was playing, and only for a while. */
+  addEventListener('pagehide',function(){
+    try{ if(playing&&!el.paused) sessionStorage.setItem('ch-music-pos',JSON.stringify({t:el.currentTime,at:Date.now()})) }catch(e){}
+  });
+  (function(){
+    var pos=null; try{ pos=JSON.parse(sessionStorage.getItem('ch-music-pos')||'null'); sessionStorage.removeItem('ch-music-pos') }catch(e){}
+    if(!pos||Date.now()-pos.at>30*60*1000||!(pos.t>0)) return;
+    function seek(){ try{ if(el.currentTime<0.5&&isFinite(el.duration)) el.currentTime=pos.t%el.duration }catch(e){} }
+    if(el.readyState>=1) seek(); else el.addEventListener('loadedmetadata',seek,{once:true});
+    CHLOG('resuming at '+pos.t.toFixed(1)+'s');
+  })();
+'''
+assert music.count('\n  paint();\n  if(wanted) attach();') == 1
+music = music.replace('\n  paint();\n  if(wanted) attach();', LEAVE + '\n  paint();\n  if(wanted) attach();')
 
 def jsonld():
     d = {
@@ -85,7 +129,7 @@ def head(title, desc, page, ld=False, preload=''):
 <link rel="stylesheet" href="site.css">
 {preload}{jsonld() if ld else ''}
 </head>
-<body>
+<body data-swap>
 <a class="skip" href="#main">Skip to content</a>
 <div class="season" role="status"><span class="dot" aria-hidden="true"></span><span id="seasonText">Hurricane season runs June 1 to November 30</span></div>
 <header class="hdr">
@@ -122,12 +166,13 @@ def footer():
   <p class="lb-cap" aria-live="polite"></p>
   <div class="lb-nav"><button type="button" class="lb-prev" aria-label="Previous photo">&#x2190;</button><button type="button" class="lb-next" aria-label="Next photo">&#x2192;</button></div>
 </div>
-<audio id="bgm" loop preload="none" playsinline><source src="music.m4a" type="audio/mp4"></audio>
-<button class="music-btn" id="musicbtn" type="button" aria-pressed="false" aria-label="Play music"><span class="eq"><i></i><i></i><i></i></span><span id="musiclbl">Play music</span></button>
-<span class="demo-tag" title="A concept, not the live Clare Homes site">Concept preview by Foundation Code</span>
+<audio data-keep id="bgm" loop preload="none" playsinline><source src="music.m4a" type="audio/mp4"></audio>
+<button data-keep class="music-btn" id="musicbtn" type="button" aria-pressed="false" aria-label="Play music"><span class="eq"><i></i><i></i><i></i></span><span id="musiclbl">Play music</span></button>
+<span class="demo-tag" data-keep title="A concept, not the live Clare Homes site">Concept preview by Foundation Code</span>
 <script src="data.js"></script>
 <script src="site.js"></script>
 {music}
+<script src="nav.js"></script>
 </body>
 </html>
 '''

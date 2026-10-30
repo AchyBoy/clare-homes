@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Clare Homes | FORTIFIED Home Builder in Lafayette, LA">
 <meta property="og:description" content="Clare Homes builds FORTIFIED, ENERGY STAR and DOE Zero Energy Ready custom homes in Lafayette, Louisiana and along the Gulf Coast. Certified FORTIFIED Professional Contractors.">
-<meta property="og:image" content="https://achyboy.github.io/clare-homes/video/hero.webp?v=20261023-065127">
+<meta property="og:image" content="https://achyboy.github.io/clare-homes/video/hero.webp?v=20261029-203818">
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/icon.png">
 <script>
@@ -19,28 +19,34 @@
    fetched with a unique URL (never cached); if it names a newer build than this
    page, hop once to ?v=<build>, a URL the cache has never seen. No popup.
    deploy.sh stamps BUILD, version.json and every asset ?v= together. */
-var BUILD='20261023-065127';
+var BUILD='20261029-203818';
 (function(){
   if(location.protocol==='file:') return;
   window.__freshPending=true;   /* the visit tracker waits on this so a hop counts once */
   function done(){ window.__freshPending=false }
   setTimeout(done,6000);
-  fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
-    if(!j||!j.build||j.build===BUILD) return done();
-    var k='ch-fresh-'+j.build; try{ if(sessionStorage.getItem(k)) return done(); sessionStorage.setItem(k,'1'); }catch(e){}
-    var u=new URL(location.href); u.searchParams.set('v',j.build); location.replace(u.toString());
-  }).catch(done);
+  function check(first){
+    fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+      if(!j||!j.build||j.build===BUILD) return done();
+      var k='ch-fresh-'+j.build; try{ if(sessionStorage.getItem(k)) return done(); sessionStorage.setItem(k,'1'); }catch(e){}
+      var u=new URL(location.href); u.searchParams.set('v',j.build); location.replace(u.toString());
+    }).catch(done);
+  }
+  check(true);
+  /* a Home Screen copy is rarely reloaded, so check again whenever it comes back on screen */
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) check(false); });
+  addEventListener('pageshow',function(e){ if(e.persisted) check(false); });
 })();
 </script>
 <script src="/visits/t.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=20261023-065127">
-<link rel="preload" as="image" href="video/hero.webp?v=20261023-065127">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "name": "Clare Homes", "url": "https://clare-homes.com/", "logo": "https://achyboy.github.io/clare-homes/img/logo.png", "image": "https://achyboy.github.io/clare-homes/video/hero.webp?v=20261023-065127", "description": "Lafayette, Louisiana home builder of FORTIFIED, ENERGY STAR and DOE Zero Energy Ready high performance homes. Certified FORTIFIED Professional Contractors.", "telephone": "+1-337-852-5292", "email": "isaac@clare-homes.com", "address": {"@type": "PostalAddress", "addressLocality": "Lafayette", "addressRegion": "LA", "addressCountry": "US"}, "areaServed": ["Lafayette, LA", "Acadiana", "Gulf Coast"], "foundingDate": "2021", "founder": [{"@type": "Person", "name": "Isaac Scott"}, {"@type": "Person", "name": "Kendall Gilmore"}], "employee": [{"@type": "Person", "name": "Kendall Gilmore", "telephone": "+1-337-789-0326", "email": "kendall.clarehomes@gmail.com"}], "knowsAbout": ["FORTIFIED Roof", "FORTIFIED Gold", "ENERGY STAR Certified Homes", "DOE Zero Energy Ready Home", "Indoor airPLUS", "SIPs"]}</script>
+<link rel="stylesheet" href="site.css?v=20261029-203818">
+<link rel="preload" as="image" href="video/hero.webp?v=20261029-203818">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "HomeAndConstructionBusiness", "name": "Clare Homes", "url": "https://clare-homes.com/", "logo": "https://achyboy.github.io/clare-homes/img/logo.png", "image": "https://achyboy.github.io/clare-homes/video/hero.webp?v=20261029-203818", "description": "Lafayette, Louisiana home builder of FORTIFIED, ENERGY STAR and DOE Zero Energy Ready high performance homes. Certified FORTIFIED Professional Contractors.", "telephone": "+1-337-852-5292", "email": "isaac@clare-homes.com", "address": {"@type": "PostalAddress", "addressLocality": "Lafayette", "addressRegion": "LA", "addressCountry": "US"}, "areaServed": ["Lafayette, LA", "Acadiana", "Gulf Coast"], "foundingDate": "2021", "founder": [{"@type": "Person", "name": "Isaac Scott"}, {"@type": "Person", "name": "Kendall Gilmore"}], "employee": [{"@type": "Person", "name": "Kendall Gilmore", "telephone": "+1-337-789-0326", "email": "kendall.clarehomes@gmail.com"}], "knowsAbout": ["FORTIFIED Roof", "FORTIFIED Gold", "ENERGY STAR Certified Homes", "DOE Zero Energy Ready Home", "Indoor airPLUS", "SIPs"]}</script>
 </head>
-<body>
+<body data-swap>
 <a class="skip" href="#main">Skip to content</a>
 <div class="season" role="status"><span class="dot" aria-hidden="true"></span><span id="seasonText">Hurricane season runs June 1 to November 30</span></div>
 <header class="hdr">
@@ -57,7 +63,7 @@ var BUILD='20261023-065127';
 <main id="main">
 
 <section class="hero" aria-labelledby="heroH">
-  <video data-bg autoplay muted loop playsinline preload="auto" poster="video/hero.webp?v=20261023-065127" aria-hidden="true" tabindex="-1"><source src="video/hero.mp4?v=20261023-065127" type="video/mp4"></video>
+  <video data-bg autoplay muted loop playsinline preload="auto" poster="video/hero.webp?v=20261029-203818" aria-hidden="true" tabindex="-1"><source src="video/hero.mp4?v=20261029-203818" type="video/mp4"></video>
   <div class="wrap">
     <svg class="logo-draw" viewBox="0 0 120 92" aria-hidden="true" focusable="false">
 <path d="M6 70 L58 26 L110 70"/><path d="M84 48 V28 H96 V58"/><circle cx="90" cy="20" r="9"/>
@@ -86,7 +92,7 @@ var BUILD='20261023-065127';
 </div></section>
 
 <section class="storm" aria-labelledby="stormH">
-  <video class="bg" data-bg muted loop playsinline preload="none" poster="video/storm.jpg?v=20261023-065127" aria-hidden="true" tabindex="-1"><source src="video/storm.mp4?v=20261023-065127" type="video/mp4"></video>
+  <video class="bg" data-bg muted loop playsinline preload="none" poster="video/storm.jpg?v=20261029-203818" aria-hidden="true" tabindex="-1"><source src="video/storm.mp4?v=20261029-203818" type="video/mp4"></video>
   <div class="wrap narrow">
     <span class="kicker">Built for the storm</span>
     <h2 id="stormH">When severe weather strikes, a FORTIFIED Roof keeps the wind and rain out</h2>
@@ -292,123 +298,6 @@ var BUILD='20261023-065127';
 </div>
 <p class="fc-note">Illustration, not a test result. Requirements summarized from IBHS at <a href="https://fortifiedhome.org/" rel="noopener">fortifiedhome.org</a>. Ask Isaac which level fits your home.</p>
 
-<script>
-(function(){
-  var L=['Conventional','FORTIFIED Roof','FORTIFIED Silver','FORTIFIED Gold'];
-  var P=[
-    {k:'nails',t:'Roof deck nails',lv:1,x:212,y:186,el:null,
-     c:'Common smooth nails hold the roof deck to the framing.',
-     f:'8D ring-shank nails in an enhanced pattern. IBHS says ring-shank nails nearly double the roof’s strength against wind.'},
-    {k:'deck',t:'Sealed roof deck',lv:1,x:262,y:206,el:'fcWater',
-     c:'If shingles blow off, rain can pour through the seams between the deck boards.',
-     f:'The roof deck is sealed, so water stays out even if the roof covering comes off.'},
-    {k:'shingles',t:'Shingles',lv:1,x:372,y:140,el:'fcShingles',
-     c:'Shingles are installed without the FORTIFIED wind rating requirement.',
-     f:'Shingles carry the highest wind ratings (ASTM D3161 Class F or D7158 Class H). An optional hail upgrade uses impact rated shingles for hail up to 2 inches.'},
-    {k:'edge',t:'Roof edges',lv:1,x:540,y:232,el:'fcEdge',
-     c:'Roof edges are where wind gets under the covering and starts peeling.',
-     f:'A wider drip edge and a fully adhered starter strip lock the edges down.'},
-    {k:'vents',t:'Attic vents',lv:1,x:350,y:178,el:null,
-     c:'Standard vents can let wind driven rain into the attic.',
-     f:'Attic vents are wind and rain resistant.'},
-    {k:'gable',t:'Gable end',lv:2,x:290,y:172,el:'fcGable',
-     c:'A tall gable wall can be pushed in or pulled out by strong wind.',
-     f:'Gable end bracing keeps that wall from collapsing.'},
-    {k:'windows',t:'Windows and doors',lv:2,x:178,y:330,el:'fcWin',
-     c:'Windows and doors are not required to be pressure rated or protected from flying debris.',
-     f:'Pressure rated windows and doors, plus impact protection in hurricane zones.'},
-    {k:'garage',t:'Garage door',lv:2,x:464,y:250,el:'fcGarage',
-     c:'A big garage door can blow in and let wind push up on the roof from inside.',
-     f:'An impact and pressure rated garage door keeps the wind out.'},
-    {k:'porch',t:'Porch',lv:2,x:320,y:246,el:'fcPorch',
-     c:'Porches and carports can lift off and take part of the roof with them.',
-     f:'Attached structures like porches and carports are anchored down.'},
-    {k:'path',t:'Roof to foundation',lv:3,x:128,y:262,el:'fcPath',
-     c:'Typical construction relies on gravity and the weight of the house to hold it down.',
-     f:'An engineered continuous load path ties the roof to the walls, story to story, and the walls to the foundation, so the house acts as one solid structure.'}
-  ];
-  var SILVER_ALSO='Silver also adds reinforced soffits, stronger exterior sheathing and chimney bracing.';
-  var svg=document.getElementById('fcSvg'), hot=document.getElementById('fcHot'), panel=document.getElementById('fcPanel'),
-      lvls=document.getElementById('fcLevels'), lvTxt=document.getElementById('fcLv'), run=document.getElementById('fcRun'),
-      res=document.getElementById('fcResult'), stage=document.getElementById('fcStage');
-  var level=1, sel=0, NS='http://www.w3.org/2000/svg';
-  P.forEach(function(p,i){
-    var g=document.createElementNS(NS,'g'); g.setAttribute('class','hs'); g.setAttribute('tabindex','0'); g.setAttribute('role','button');
-    g.setAttribute('aria-label',p.t);
-    g.innerHTML='<circle class="pulse" cx="'+p.x+'" cy="'+p.y+'" r="12"/><circle class="ring" cx="'+p.x+'" cy="'+p.y+'" r="12"/><text x="'+p.x+'" y="'+(p.y+4)+'" text-anchor="middle">'+(i+1)+'</text>';
-    g.addEventListener('click',function(){pick(i)});
-    g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(i)}});
-    hot.appendChild(g); p.g=g;
-  });
-  function pick(i){sel=i;paint();}
-  function clearDamage(){ document.querySelectorAll('#fcSvg .fail, #fcSvg .strain, #fcSvg .chunk, #fcSvg .roofoff').forEach(function(n){n.classList.remove('fail','strain','chunk','roofoff')}); svg.classList.remove('roofgone','done'); res.classList.remove('show'); P.forEach(function(p){p.g.classList.remove('broke')}); }
-  function setLevel(l){level=l;clearDamage();paint();}
-  function paint(){
-    ['lvl0','lvl1','lvl2','lvl3'].forEach(function(c){svg.classList.remove(c)}); svg.classList.add('lvl'+level);
-    [].forEach.call(lvls.children,function(b){var on=+b.dataset.l===level;b.classList.toggle('on',on);b.classList.toggle('gold',on&&level===3);b.setAttribute('aria-selected',on)});
-    var up=P.filter(function(p){return p.lv<=level}).length;
-    lvTxt.innerHTML='<b>'+L[level]+'</b> · '+up+' of '+P.length+' upgraded';
-    P.forEach(function(p,i){p.g.classList.toggle('up',p.lv<=level);p.g.classList.toggle('sel',i===sel)});
-    var p=P[sel], has=p.lv<=level;
-    panel.innerHTML='<span class="tag'+(p.lv===3?' g':'')+'">Added at '+L[p.lv]+'</span><h3>'+(sel+1)+'. '+p.t+'</h3>'+
-      '<div class="fc-cmp"><div class="c"><small>Conventional</small>'+p.c+'</div><div class="f'+(has?'':' no')+'"><small>'+(has?'Your '+L[level]+' home':'FORTIFIED ('+L[p.lv]+' and up)')+'</small>'+p.f+'</div></div>'+
-      (p.lv===2?'<p class="src">'+SILVER_ALSO+'</p>':'')+
-      (level===1&&p.lv===1?'<p class="src">Every Clare home is built to FORTIFIED Roof at minimum.</p>':'')+
-      (p.lv===3?'<p class="src">Clare Homes finished a FORTIFIED Gold custom home in 2025.</p>':'')+
-      '<div class="fc-list">'+P.map(function(q,j){return '<button type="button" data-j="'+j+'" class="'+(q.lv<=level?'up ':'')+(j===sel?'on':'')+'">'+(j+1)+'. '+q.t+'</button>'}).join('')+'</div>';
-    panel.querySelectorAll('.fc-list button').forEach(function(b){b.addEventListener('click',function(){pick(+b.dataset.j)})});
-  }
-  lvls.addEventListener('click',function(e){var b=e.target.closest('button');if(b&&!storming)setLevel(+b.dataset.l)});
-  var storming=false, power=2;
-  var BR={edge:1,shingles:2,deck:2,vents:2,garage:2,nails:3,gable:3,windows:3,porch:3,path:4};
-  var SAY={edge:'the roof edge peeled up',shingles:'shingles blew off',deck:'rain poured in through the roof deck',vents:'rain blew in through the attic vents',
-           garage:'the garage door blew in',nails:'roof deck panels pulled loose',gable:'the gable end pushed in',windows:'windows broke',porch:'the porch lifted',path:'the roof strained against the walls'};
-  var STORM=['','a strong thunderstorm','a Category 1 hurricane','a Category 3 hurricane','an EF-2 tornado'];
-  var sp=document.getElementById('fcStorm');
-  function paintStorm(){ [].forEach.call(sp.children,function(b){ var on=+b.dataset.s===power; b.classList.toggle('on',on); b.setAttribute('aria-checked',on) }); }
-  sp.addEventListener('click',function(e){ var b=e.target.closest('button'); if(b&&!storming){ power=+b.dataset.s; paintStorm(); clearDamage(); run.lastChild.textContent='Run the storm'; } });
-  paintStorm();
-  function cap(t){ return t.charAt(0).toUpperCase()+t.slice(1) }
-  run.addEventListener('click',function(){
-    if(storming) return; storming=true; run.disabled=true; clearDamage(); void svg.getBoundingClientRect();
-    stage.classList.add('sky','st'+power); svg.classList.add('storming','st'+power); if(power>=3) stage.classList.add('shake');
-    var failed=P.filter(function(p){ return p.lv>level && power>=BR[p.k] });
-    failed.forEach(function(p){
-      if(p.el) document.getElementById(p.el).classList.add('fail');
-      if(p.k==='nails') document.getElementById('fcShingles').classList.add('fail');
-      if(p.k==='vents') document.getElementById('fcWater').classList.add('fail');
-      if(p.k==='path'){
-        if(level===0){ document.getElementById('fcRoof').classList.add('roofoff'); document.getElementById('fcGable').classList.add('roofoff'); svg.classList.add('roofgone'); }
-        else { document.getElementById('fcRoof').classList.add('strain'); document.getElementById('fcGable').classList.add('strain'); }
-      }
-      if(p.k==='nails'&&power<4) document.getElementById('fcDeck').classList.add('chunk');
-    });
-    setTimeout(function(){ stage.classList.remove('shake'); },2400);
-    setTimeout(function(){
-      var head='<b>'+L[level]+'</b> in '+STORM[power]+': ';
-      if(!failed.length){
-        res.innerHTML=head+'everything held.'+(level===3&&power===4?' The roof stayed tied down to the foundation.':'');
-      } else {
-        var fix=Math.max.apply(null,failed.map(function(p){return p.lv}));
-        var said=failed.map(function(p){ if(level===0&&p.k==='path') return 'the whole roof tore off'; if(p.k==='nails') return 'a section of roof deck tore away'; return SAY[p.k]; });
-        var ORDER=['path','nails','gable','windows','garage','porch','shingles','deck','edge','vents'];
-        failed.sort(function(a,b){return ORDER.indexOf(a.k)-ORDER.indexOf(b.k)});
-        said=failed.map(function(p){ if(level===0&&p.k==='path') return 'the whole roof tore off'; if(p.k==='nails') return 'a section of roof deck tore away'; return SAY[p.k]; });
-        if(level===0&&power===4) said=said.filter(function(t){return !/shingles|edge|roof deck|vents/.test(t)});
-        if(said.length>4) said=said.slice(0,4).concat(['and more']);
-        res.innerHTML=head+said.join(', ')+'. <span style="color:var(--muted)">'+L[fix]+' holds through all of it.</span>';
-      }
-      res.classList.add('show');
-    },2600);
-    setTimeout(function(){
-      svg.classList.remove('storming','st1','st2','st3','st4'); stage.classList.remove('sky','st1','st2','st3','st4','shake');
-      svg.classList.add('done'); failed.forEach(function(p){ p.g.classList.add('broke') });
-      storming=false; run.disabled=false; run.lastChild.textContent='Run it again';
-    },power===4&&level===0?7200:5600);
-  });
-  paint();
-})();
-</script>
 </div></section>
 
 
@@ -504,18 +393,18 @@ var BUILD='20261023-065127';
   <p class="lb-cap" aria-live="polite"></p>
   <div class="lb-nav"><button type="button" class="lb-prev" aria-label="Previous photo">&#x2190;</button><button type="button" class="lb-next" aria-label="Next photo">&#x2192;</button></div>
 </div>
-<audio id="bgm" loop preload="none" playsinline><source src="music.m4a?v=20261023-065127" type="audio/mp4"></audio>
-<button class="music-btn" id="musicbtn" type="button" aria-pressed="false" aria-label="Play music"><span class="eq"><i></i><i></i><i></i></span><span id="musiclbl">Play music</span></button>
-<span class="demo-tag" title="A concept, not the live Clare Homes site">Concept preview by Foundation Code</span>
-<script src="data.js?v=20261023-065127"></script>
-<script src="site.js?v=20261023-065127"></script>
+<audio data-keep id="bgm" loop preload="none" playsinline><source src="music.m4a?v=20261029-203818" type="audio/mp4"></audio>
+<button data-keep class="music-btn" id="musicbtn" type="button" aria-pressed="false" aria-label="Play music"><span class="eq"><i></i><i></i><i></i></span><span id="musiclbl">Play music</span></button>
+<span class="demo-tag" data-keep title="A concept, not the live Clare Homes site">Concept preview by Foundation Code</span>
+<script src="data.js?v=20261029-203818"></script>
+<script src="site.js?v=20261029-203818"></script>
 <script>
 /* Music diagnostics, hidden unless the URL has ?debug=1. Ask for the Copy output. */
 window.CHLOG=function(){};
 (function(){
   if(!/[?&]debug=1/.test(location.search)) return;
   var t0=Date.now(), lines=[];
-  var box=document.createElement('div'); box.id='chdbg';
+  var box=document.createElement('div'); box.id='chdbg'; box.setAttribute('data-keep','');
   box.innerHTML='<div class="hd"><b>MUSIC LOG</b><button id="chreset">Reset</button><button id="chcopy">Copy</button><button id="chclose">Hide</button></div><div class="body" id="chbody"></div>';
   document.body.appendChild(box);
   document.getElementById('chclose').onclick=function(){box.remove()};
@@ -641,6 +530,43 @@ window.CHLOG=function(){};
   });
   el.addEventListener('pause',function(){ if(wanted && playing){ audibleBlocked=true; CHLOG('paused by the browser','bad'); lost(); } });
 
+  /* Leaving for a page with no music (nav.js falls back to a normal load if a
+     swap fails): a soft fade, then go. Desktop and Android fade el.volume.
+     iPhone ignores el.volume, so there the fade runs through a Web Audio gain
+     made inside the tap that is leaving (a tap is what lets an audio context
+     run). That is the only Web Audio on this site and it exists for the last
+     0.7 s of the page, after which the page is gone, so the iOS "suspended
+     context swallows the sound" trap cannot bite. done() always runs, at most
+     ~0.9 s later. Ported from the Van Alan site. */
+  window.CH_MUSIC_LEAVE=function(done){
+    var fired=false; function go(){ if(fired) return; fired=true; done() }
+    if(!playing||el.paused){ go(); return }
+    try{ sessionStorage.setItem('ch-music-pos',JSON.stringify({t:el.currentTime,at:Date.now()})) }catch(e){}
+    playing=false; detach();
+    setTimeout(go,900);
+    if(volumeWorks){ fadeTo(0,function(){ el.pause(); go() }); return }
+    try{
+      var AC=window.AudioContext||window.webkitAudioContext, ctx=new AC(), src=ctx.createMediaElementSource(el), g=ctx.createGain();
+      src.connect(g); g.connect(ctx.destination);
+      var t=ctx.currentTime; g.gain.setValueAtTime(1,t); g.gain.linearRampToValueAtTime(0.0001,t+0.7);
+      setTimeout(function(){ try{ el.pause() }catch(e){} go() },720);
+    }catch(e){ try{ el.pause() }catch(e2){} go() }
+  };
+
+  /* A hard page load restarts the song. Remember the spot on the way out and
+     pick it up on the way in, so it reads as one song, not a restart. Only if
+     it was playing, and only for a while. */
+  addEventListener('pagehide',function(){
+    try{ if(playing&&!el.paused) sessionStorage.setItem('ch-music-pos',JSON.stringify({t:el.currentTime,at:Date.now()})) }catch(e){}
+  });
+  (function(){
+    var pos=null; try{ pos=JSON.parse(sessionStorage.getItem('ch-music-pos')||'null'); sessionStorage.removeItem('ch-music-pos') }catch(e){}
+    if(!pos||Date.now()-pos.at>30*60*1000||!(pos.t>0)) return;
+    function seek(){ try{ if(el.currentTime<0.5&&isFinite(el.duration)) el.currentTime=pos.t%el.duration }catch(e){} }
+    if(el.readyState>=1) seek(); else el.addEventListener('loadedmetadata',seek,{once:true});
+    CHLOG('resuming at '+pos.t.toFixed(1)+'s');
+  })();
+
   paint();
   if(wanted) attach();
   CHLOG('init wanted='+wanted);
@@ -651,5 +577,6 @@ window.CHLOG=function(){};
   });
 })();
 </script>
+<script src="nav.js?v=20261029-203818"></script>
 </body>
 </html>
