@@ -75,7 +75,7 @@
     try{
       var body=document.body;
       /* out with this page, keeping the music */
-      [].slice.call(body.childNodes).forEach(function(n){ if(!(n.nodeType===1&&n.hasAttribute('data-keep'))) body.removeChild(n) });
+      [].slice.call(body.childNodes).forEach(function(n){ if(!(n.nodeType===1&&(n.hasAttribute('data-keep')||/(^|\s)fc-season-/.test(n.className)))) body.removeChild(n)   /* + the seasonal ribbon/leaves season.js adds at deploy */ });
       var first=body.firstChild;
       [].slice.call(doc.body.childNodes).forEach(function(n){
         if(n.nodeType===1&&(n.hasAttribute('data-keep')||n.tagName==='SCRIPT')) return;   /* scripts are already running */
